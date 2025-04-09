@@ -23,9 +23,8 @@ jobs:
 
     - name: Merge branch into release
       run: |
-        git remote update
-        git fetch
-        git checkout --track origin/release
+        git fetch --all
+        git checkout release
         git merge ${{ github.event.pull_request.head.ref }} --no-ff
         git push origin release
 
