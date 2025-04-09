@@ -1,17 +1,29 @@
-name: Merge any release branch to uat
+name: Pull Request Action
 on:
-  push:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
     branches:
       - hml
+
 jobs:
-  merge-branch:
+  create-pull-request:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - name: Check out repository code
+        uses: actions/checkout@v2
 
-      - name: Merge staging -> uat
-        uses: devmasx/merge-branch@master
+      # - name: Show envs
+      #   run: |
+      #     git fetch --all
+      #     echo "${{toJson(github)}}"
+      #     echo "==================="
+      #     echo "${{toJson(github.event.pull_request)}}"
+
+      - name: pull-request
+        uses: repo-sync/pull-request@v2
         with:
-          type: now
-          target_branch: release
+          source_branch: ${{github.event.pull_request.base.head.ref}}
+          destination_branch: release
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          pr_title: "[RELEASE] ${{ github.event.head_commit.message }}"
+          pr_body: "${{github.event.pull_request.base.body}}"
