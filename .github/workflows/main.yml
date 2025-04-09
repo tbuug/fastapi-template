@@ -33,5 +33,5 @@ jobs:
         with:
           destination_branch: release
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          pr_description: ${{ github.event.head_commit.message }}
+          pr_body: ${{ github.event.head_commit.message }}
           pr_title: "[TO RELEASE] ${{ github.event.pull_request.title }}"
