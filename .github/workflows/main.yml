@@ -1,6 +1,7 @@
 name: Pull Request Action
 on:
   pull_request:
+    types: [opened, synchronize, reopened, closed]
     branches:
       - hml
 
@@ -15,12 +16,13 @@ jobs:
         run: |
           git fetch --all
           echo "${{toJson(github)}}"
-          echo "${{env}}"
+          echo "==================="
+          echo "${{toJson(github.event.pull_request)}}"
 
       - name: pull-request
         uses: repo-sync/pull-request@v2
         with:
-          source_branch: ${{github.ref_name}}
+          source_branch: ${{github.event.pull_request.base.ref}}
           destination_branch: release
           github_token: ${{ secrets.GITHUB_TOKEN }}
           pr_title: "[RELEASE] ${{ github.event.head_commit.message }}"
