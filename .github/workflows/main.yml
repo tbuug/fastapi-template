@@ -32,7 +32,8 @@ jobs:
       - name: pull-request
         uses: repo-sync/pull-request@v2
         with:
+          source_branch: ${{github.ref_name}}
           destination_branch: release
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          pr_title: "[TO RELEASE] ${{ github.event.head_commit.message }}"
+          pr_title: "[RELEASE] ${{ github.event.head_commit.message }}"
           pr_body: "View changes here: [Changes](${{ github.event.head_commit.url }})"
