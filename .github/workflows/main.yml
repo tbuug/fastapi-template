@@ -1,6 +1,6 @@
 name: Pull Request Action
 on:
-  push:
+  pull_request:
     branches:
       - hml
 
@@ -15,6 +15,7 @@ jobs:
         run: |
           git fetch --all
           echo "${{toJson(github)}}"
+          echo "${{env}}"
 
       - name: pull-request
         uses: repo-sync/pull-request@v2
