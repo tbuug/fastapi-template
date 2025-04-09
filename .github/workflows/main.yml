@@ -28,6 +28,10 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
+      
+      - name: Show envs
+          run: |
+            echo ${{github}}
 
       - name: pull-request
         uses: repo-sync/pull-request@v2
