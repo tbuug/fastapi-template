@@ -1,17 +1,37 @@
-name: Merge any release branch to uat
+# name: Merge any release branch to uat
+# on:
+#   push:
+#     branches:
+#       - hml
+# jobs:
+#   merge-branch:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@master
+
+#       - name: Merge staging -> uat
+#         uses: devmasx/merge-branch@master
+#         with:
+#           type: now
+#           target_branch: release
+#           github_token: ${{ secrets.GITHUB_TOKEN }}
+
+name: Pull Request Action
 on:
   push:
     branches:
       - hml
+
 jobs:
-  merge-branch:
+  create-pull-request:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-
-      - name: Merge staging -> uat
-        uses: devmasx/merge-branch@master
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: pull-request
+        uses: repo-sync/pull-request@v2
         with:
-          type: now
-          target_branch: release
+          destination_branch: release
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          pr_label: "feature, automated pr"
+          pr_title: "[TO RELEASE] Simple demo"
