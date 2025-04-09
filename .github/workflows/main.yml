@@ -16,6 +16,7 @@ jobs:
         run: |
           git fetch
           git status
+          echo "Source:: ${{github.event.pull_request.base.head.ref}}"
 
       - name: pull-request
         uses: repo-sync/pull-request@v2
