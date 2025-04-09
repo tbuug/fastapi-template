@@ -22,6 +22,10 @@ on:
     branches:
       - hml
 
+env:
+  PR_TITLE: ${{ github.event.pull_request.title }} # this is returning empty
+  PR_DESCRIPTION: ${{ github.event.head_commit.message }}
+
 jobs:
   create-pull-request:
     runs-on: ubuntu-latest
@@ -33,5 +37,5 @@ jobs:
         with:
           destination_branch: release
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          pr_label: "feature, automated pr"
-          pr_title: "[TO RELEASE] Simple demo"
+          pr_description: $PR_DESCRIPTION
+          pr_title: "[TO RELEASE] $PR_TITLE"
