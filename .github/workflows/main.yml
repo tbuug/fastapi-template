@@ -15,9 +15,6 @@ jobs:
       - name: Show envs
         run: |
           git fetch --all
-          # echo "${{toJson(github)}}"
-          # echo "==================="
-          # echo "${{toJson(github.event.pull_request)}}"
           git checkout release
 
       - name: pull-request
