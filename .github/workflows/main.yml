@@ -1,21 +1,3 @@
-# name: Merge any release branch to uat
-# on:
-#   push:
-#     branches:
-#       - hml
-# jobs:
-#   merge-branch:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@master
-
-#       - name: Merge staging -> uat
-#         uses: devmasx/merge-branch@master
-#         with:
-#           type: now
-#           target_branch: release
-#           github_token: ${{ secrets.GITHUB_TOKEN }}
-
 name: Pull Request Action
 on:
   push:
