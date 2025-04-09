@@ -23,6 +23,7 @@ jobs:
 
       - name: Merge branch into release
         run: |
+          git fetch
           git checkout release
           git merge ${{ github.event.pull_request.head.ref }} --no-ff
           git push
