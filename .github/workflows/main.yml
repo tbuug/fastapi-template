@@ -32,7 +32,7 @@ jobs:
       - name: Show envs
         run: |
           git fetch --all
-          echo "${{github}}"
+          echo "${{asJson(github)}}"
 
       - name: pull-request
         uses: repo-sync/pull-request@v2
