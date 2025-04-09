@@ -16,12 +16,12 @@ jobs:
         run: |
           git fetch
           git status
-          echo "Source:: ${{toJson(github.event.pull_request)}}"
+          echo "Source:: ${{toJson(github.event.pull_request.head.ref)}}"
 
       - name: pull-request
         uses: repo-sync/pull-request@v2
         with:
-          source_branch: ${{github.event.pull_request.base.head.ref}}
+          source_branch: ${{github.event.pull_request.head.ref}}
           destination_branch: release
           github_token: ${{ secrets.GITHUB_TOKEN }}
           pr_title: "[RELEASE] ${{ github.event.pull_request.title }}"
