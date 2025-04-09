@@ -28,9 +28,12 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
+
+      - name: Show evns
+        run: echo ${{github.event}}
+
       - name: pull-request
         uses: repo-sync/pull-request@v2
-        run: echo ${{github.event}}
         with:
           destination_branch: release
           github_token: ${{ secrets.GITHUB_TOKEN }}
