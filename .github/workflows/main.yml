@@ -30,7 +30,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Show evns
-        run: echo ${{github.event}}
+        run: echo ${{toJson(github.event)}}
 
       - name: pull-request
         uses: repo-sync/pull-request@v2
