@@ -5,9 +5,6 @@ on:
     branches:
       - hml
 
-clone:
-  depth: 250
-
 jobs:
   create-pull-request:
     runs-on: ubuntu-latest
@@ -17,8 +14,8 @@ jobs:
 
       - name: Show envs
         run: |
-          git fetch --all
-          git checkout release
+          git fetch
+          git status
 
       - name: pull-request
         uses: repo-sync/pull-request@v2
