@@ -29,13 +29,10 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
 
-      - name: Show evns
-        run: echo ${{toJson(github)}}
-
       - name: pull-request
         uses: repo-sync/pull-request@v2
         with:
           destination_branch: release
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          pr_body: ${{ github.event.head_commit.message }}
-          pr_title: "[TO RELEASE] ${{ github.event.pull_request.title }}"
+          pr_title: "[TO RELEASE] ${{ github.event.head_commit.message }}"
+          pr_body: "View changes here: [Changes](${{ github.event.head_commit.url }})"
