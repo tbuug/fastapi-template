@@ -16,17 +16,16 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Set up Git
-      run: |
-        git config user.name "github-actions[bot]"
-        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+    # - name: Set up Git
+    #   run: |
+    #     git config user.name "github-actions[bot]"
+    #     git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
     - name: Merge branch into release
       run: |
-        git fetch --all
         git checkout release
         git merge ${{ github.event.pull_request.head.ref }} --no-ff
-        git push origin release
+        git push
 
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
