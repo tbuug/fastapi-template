@@ -17,6 +17,9 @@ jobs:
           git fetch --all
           git checkout release
 
+      - clone:
+        depth: 250
+
       - name: pull-request
         uses: repo-sync/pull-request@v2
         with:
