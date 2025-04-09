@@ -1,32 +1,17 @@
-name: Automatic Merge to Release
-
+name: Merge any release branch to uat
 on:
-  pull_request:
+  push:
     branches:
       - hml
-    types:
-      - closed
-
 jobs:
-  merge_branch:
-    if: github.event.pull_request.merged == true
+  merge-branch:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - uses: actions/checkout@master
 
-    - name: Set up Git
-      run: |
-        git config user.name "github-actions[bot]"
-        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-    - name: Merge branch into release
-      run: |
-        git fetch --all
-        git checkout release
-        git merge ${{ github.event.pull_request.head.ref }} --no-ff
-        git push origin release
-
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Merge staging -> uat
+        uses: devmasx/merge-branch@master
+        with:
+          type: now
+          target_branch: release
+          github_token: ${{ secrets.GITHUB_TOKEN }}
