@@ -1,7 +1,7 @@
 name: Pull Request Action
 on:
-  pull_request:
-    types: [opened, synchronize, reopened, closed]
+  pull_request_review:
+    types: [submitted]
     branches:
       - hml
 
