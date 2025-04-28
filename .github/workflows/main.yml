@@ -1,29 +1,11 @@
-# name: Merge any release branch to uat
-# on:
-#   push:
-#     branches:
-#       - hml
-# jobs:
-#   merge-branch:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@master
-
-#       - name: Merge staging -> uat
-#         uses: devmasx/merge-branch@master
-#         with:
-#           type: now
-#           target_branch: release
-#           github_token: ${{ secrets.GITHUB_TOKEN }}
-
 name: Pull Request Action
 on:
-  push:
-    branches:
-      - hml
+  pull_request_review:
+    types: [submitted]
 
 jobs:
   create-pull-request:
+    if: ${{ github.event.pull_request.base.ref == 'hml' }}
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
@@ -31,14 +13,15 @@ jobs:
 
       - name: Show envs
         run: |
-          git fetch --all
-          echo "${{toJson(github)}}"
+          git fetch
+          git status
+          echo "Source:: ${{toJson(github.event.pull_request.head.ref)}}"
 
       - name: pull-request
         uses: repo-sync/pull-request@v2
         with:
-          source_branch: ${{github.ref_name}}
+          source_branch: ${{github.event.pull_request.head.ref}}
           destination_branch: release
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          pr_title: "[RELEASE] ${{ github.event.head_commit.message }}"
-          pr_body: "View changes here: [Changes](${{ github.event.head_commit.url }})"
+          pr_title: "[RELEASE] ${{ github.event.pull_request.title }}"
+          pr_body: "${{github.event.pull_request.body}}"
