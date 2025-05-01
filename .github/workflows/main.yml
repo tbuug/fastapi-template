@@ -1,11 +1,12 @@
 name: Pull Request Action
 on:
-  pull_request_review:
-    types: [submitted]
+  pull_request:
+    branches:
+      - hml
+    types: [closed]
 
 jobs:
   create-pull-request:
-    if: ${{ github.event.pull_request.base.ref == 'hml' }}
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
