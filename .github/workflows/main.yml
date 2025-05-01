@@ -27,4 +27,5 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           pr_title: "${{ github.event.pull_request.title }}"
           pr_body: "${{github.event.pull_request.body}}"
-          pr_assignee: "${{github.event.pull_request.assignee}}"
+          pr_assignee: "${{github.event.pull_request.merged_by.login}}"
+          pr_label: feature
