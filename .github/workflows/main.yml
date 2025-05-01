@@ -17,6 +17,7 @@ jobs:
           git fetch
           git status
           echo "Source:: ${{toJson(github.event.pull_request.head.ref)}}"
+          echo "${{toJson(github.event.pull_request)}}"
 
       - name: pull-request
         uses: repo-sync/pull-request@v2
@@ -24,5 +25,6 @@ jobs:
           source_branch: ${{github.event.pull_request.head.ref}}
           destination_branch: release
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          pr_title: "[RELEASE] ${{ github.event.pull_request.title }}"
+          pr_title: "${{ github.event.pull_request.title }}"
           pr_body: "${{github.event.pull_request.body}}"
+          pr_assignee: "${{github.event.pull_request.assignee}}"
