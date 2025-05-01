@@ -1,9 +1,9 @@
 name: Pull Request Action
 on:
   pull_request:
-    types: [opened, synchronize, reopened, closed]
     branches:
       - hml
+    types: [closed]
 
 jobs:
   create-pull-request:
@@ -12,18 +12,18 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
 
-      # - name: Show envs
-      #   run: |
-      #     git fetch --all
-      #     echo "${{toJson(github)}}"
-      #     echo "==================="
-      #     echo "${{toJson(github.event.pull_request)}}"
+      - name: Show envs
+        run: |
+          git fetch
+          git status
 
       - name: pull-request
         uses: repo-sync/pull-request@v2
         with:
-          source_branch: ${{github.event.pull_request.base.head.ref}}
+          source_branch: ${{github.event.pull_request.head.ref}}
           destination_branch: release
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          pr_title: "[RELEASE] ${{ github.event.head_commit.message }}"
-          pr_body: "${{github.event.pull_request.base.body}}"
+          pr_title: "${{ github.event.pull_request.title }}"
+          pr_body: "${{github.event.pull_request.body}}"
+          pr_assignee: "${{github.event.pull_request.merged_by.login}}"
+          pr_label: feature
