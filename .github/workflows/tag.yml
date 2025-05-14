@@ -16,3 +16,17 @@ jobs:
         with:
           labels: 'bug'
           github-token: ${{ secrets.GITHUB_TOKEN }}
+
+  auto-assign:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Assign PR to creator
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.issues.addAssignees({
+              owner: context.payload.repository.owner.login,
+              repo: context.payload.repository.name,
+              issue_number: context.payload.pull_request.number,
+              assignees: [context.actor]
+            })          
