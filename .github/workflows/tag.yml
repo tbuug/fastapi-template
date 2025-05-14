@@ -1,0 +1,24 @@
+name: Add tag action
+on:
+  pull_request:
+    branches:
+      - hml
+    types: [opened]
+
+jobs:
+  add_labels:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add labels based on PR title
+        run: |
+          gh pr view --json title,body,commits $PR_NUMBER | jq -r '.title'
+          gh pr edit $PR_NUMBER --label "bug" # Adiciona a tag "bug"
+          echo "PR title: ${{ github.event.pull_request.title }}"
+          echo "PR number: ${{ github.event.pull_request.number }}"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+      - name: Print labels
+        run: |
+          gh pr view $PR_NUMBER --json labels | jq -r '.labels[].name'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
