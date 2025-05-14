@@ -11,14 +11,7 @@ jobs:
     steps:
       - name: Add labels based on PR title
         run: |
-          gh pr view --json title,body,commits $PR_NUMBER | jq -r '.title'
-          gh pr edit $PR_NUMBER --add-label bug
-          echo "PR title: ${{ github.event.pull_request.title }}"
-          echo "PR number: ${{ github.event.pull_request.number }}"
+          git push origin HEAD:hml --push-options=--label=bug
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
-      - name: Print labels
-        run: |
-          gh pr view $PR_NUMBER --json labels | jq -r '.labels[].name'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+
