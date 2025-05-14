@@ -11,6 +11,7 @@ jobs:
     steps:
       - name: Add labels based on PR title
         run: |
+          git init
           git push origin HEAD:hml --push-options=--label=bug
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
