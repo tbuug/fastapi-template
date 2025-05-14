@@ -12,7 +12,7 @@ jobs:
       - name: Add labels based on PR title
         run: |
           gh pr view --json title,body,commits $PR_NUMBER | jq -r '.title'
-          gh pr edit $PR_NUMBER --label "bug" # Adiciona a tag "bug"
+          gh pr edit $PR_NUMBER --add-label bug
           echo "PR title: ${{ github.event.pull_request.title }}"
           echo "PR number: ${{ github.event.pull_request.number }}"
         env:
